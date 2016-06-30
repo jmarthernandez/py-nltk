@@ -83,7 +83,8 @@ from nltk.tokenize import word_tokenize
 
 txt = "I am an example sentence.  Sometimes I have many sentences.  Look it's Mr. Justin"
 words_txt = word_tokenize(txt)
-tagged = nltk.pos_tag(words)
+tagged = nltk.pos_tag(words_text)
+print(tagged)
 
 ````
 returns
@@ -138,3 +139,40 @@ returns
 Chunking is recovering phrase groups based on parts of speech tags.
 We can parse out verb groups, the predicate, or noun phrases, the subject.
 we can break apart sentences into its chunks.
+
+## Named Entities
+
+Named entities are a more specific way of identifying parts of text.
+While they are much more readable than.
+
+````
+import nltk
+from nltk.tokenize import word_tokenize
+
+txt = "I am an example sentence.  Sometimes I have many sentences.  Look it's Mr. Justin"
+words_txt = word_tokenize(txt)
+tagged = nltk.pos_tag(words_text)
+print(nltk.ne_chunk(tagged))
+
+````
+returns
+
+````
+Tree('S', [('I', 'PRP'), ('am', 'VBP'), ('an', 'DT'), Tree('GPE', [('American', 'JJ')]), ('Dollar', 'NN'), ('from', 'IN'), ('June', 'NNP'), ('of', 'IN'), Tree('ORGANIZATION', [('WHO', 'NNP'), ('Obama', 'NNP')])])
+
+````
+
+As we can see `ne_chunk` is not super accurate but could potentially provide insights.
+For example we see that American is tagged as "JJ" rather than GPE.
+
+| NE Type      | Examples                                |
+|--------------|-----------------------------------------|
+| ORGANIZATION | Georgia-Pacific Corp., WHO              |
+| PERSON       | Eddy Bonte, President Obama             |
+| LOCATION     | Murray River, Mount Everest             |
+| DATE         | June, 2008-06-29                        |
+| TIME         | two fifty a m, 1:30 p.m.                |
+| MONEY        | 175 million Canadian Dollars, GBP 10.40 |
+| PERCENT      | twenty pct, 18.75 %                     |
+| FACILITY     | Washington Monument, Stonehenge         |
+| GPE          | South East Asia, Midlothian             |
