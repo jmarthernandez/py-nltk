@@ -25,10 +25,14 @@ custom_tokenized = custom_sent_tokenizer.tokenize(mlk)
 
 def process_content():
     try:
-        for i in custom_tokenized:
+        for i in custom_tokenized[5:]:
             words = word_tokenize(i)
             tagged = nltk.pos_tag(words)
-            print(tagged)
+            chunkGram = r"""Chunk: {<.*>+}
+                            }<VB.?|IN|DT|TO>+{"""
+            chunkParser = nltk.RegexpParser(chunkGram)
+            chunked = chunkParser.parse(tagged)
+            chunked.draw()
     except Exception as e:
         print(str(e))
 
