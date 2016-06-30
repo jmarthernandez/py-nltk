@@ -8,6 +8,8 @@ I use both word tokenizing and sentence tokenizing to pull apart the famous
 
 ## Word Tokenizing
 ````
+from nltk.tokenize import word_tokenize
+
 txt = "I am an example sentence.  Sometimes I have many sentences.  Look it's Mr. Justin"
 word_tokenize(txt)
 ````
@@ -23,6 +25,8 @@ of the text.
  
 ## Sentence Tokenizing
 ````
+from nltk.tokenize import sent_tokenize
+
 txt = "I am an example sentence.  Sometimes I have many sentences.  Look it's Mr. Justin"
 sent_tokenize(txt)
 ````
@@ -39,6 +43,9 @@ sentences.
 
 ## Stop Words
 ````
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
 txt = "I am an example sentence.  Sometimes I have many sentences.  Look it's Mr. Justin"
 words_txt = word_tokenize(txt)
 stop_words = set(stopwords.words('english'))
@@ -56,3 +63,32 @@ returns
 ````
 
 Stop words are words that are so common that they generally don't change the meaning of a sentence.  Words like "the", "a", "and" do not have much impact on how a sentence is interpreted.
+
+## Coporas
+
+Copora is a group of texts that have something similar.  Medical journals, State of the Union addresses, and Tweets would all be examples of Corporas.
+
+## Lexicon
+This is meaning of words within a context.  For example, bull would have two meanings if you asked an investor and a rancher.
+
+## Tagging Parts of Speech
+
+In NLTK it is incredibly simple to tag parts of speech using `nltk.pos_tag(word)`.
+
+Here is an example where we iterate over a txt and print out the part of speech.
+
+````
+import nltk
+from nltk.tokenize import word_tokenize
+
+txt = "I am an example sentence.  Sometimes I have many sentences.  Look it's Mr. Justin"
+words_txt = word_tokenize(txt)
+tagged = nltk.pos_tag(words)
+
+````
+returns
+
+````
+[('I', 'PRP'), ('am', 'VBP'), ('an', 'DT'), ('example', 'NN'), ('sentence', 'NN'), ('.', '.'), ('Sometimes', 'RB'), ('I', 'PRP'), ('have', 'VBP'), ('many', 'JJ'), ('sentences', 'NNS'), ('.', '.'), ('Look', 'VB'), ('it', 'PRP'), ("'s", 'VBZ'), ('Mr.', 'NNP'), ('Justin', 'NNP')]
+
+````
