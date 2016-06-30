@@ -1,8 +1,8 @@
 from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
+from utils import read
 
-txt_file = open('mlk.txt', 'r')
-mlk = txt_file.read()
-txt_file.close()
+mlk = read('mlk.txt')
 
 print(sent_tokenize(mlk))
 print(word_tokenize(mlk))
