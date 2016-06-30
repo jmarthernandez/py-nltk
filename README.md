@@ -132,3 +132,9 @@ returns
 | WP      | wh-pronoun                            | who, what                               |
 | WP$     | possessive wh-pronoun                 | whose                                   |
 | WRB     | wh-abverb                             | where, when                             |
+
+## Chunking
+
+Chunking is recovering phrase groups based on parts of speech tags.
+We can parse out verb groups, the predicate, or noun phrases, the subject.
+we can break apart sentences into its chunks.
