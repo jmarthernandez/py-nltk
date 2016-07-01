@@ -42,7 +42,11 @@ testing_set = feature_sets[1900:]
 # Naive Bayes
 # posterior = prior occurences X (liklihood / evidence)
 
-classifier = nltk.NaiveBayesClassifier.train(training_set)
+def run_print(label, classifier):
+    print(label, nltk.classify.accuracy(classifier, testing_set) * 100)
+
+NBclassifier = nltk.NaiveBayesClassifier.train(training_set)
+
 MNB_classifier = SklearnClassifier(MultinomialNB())
 MNB_classifier.train(training_set)
 
@@ -65,15 +69,15 @@ NuSVC_classifier = SklearnClassifier(NuSVC())
 NuSVC_classifier.train(training_set)
 
 # nltk algo
-print('Naive Bayes:', nltk.classify.accuracy(classifier, testing_set) * 100)
-classifier.show_most_informative_features(15)
+run_print('Naive Bayes:', NBclassifier)
+NBclassifier.show_most_informative_features(15)
 
 # Sklearn algos
-print('MNB_classifier:', nltk.classify.accuracy(MNB_classifier, testing_set) * 100)
-print('BNB_classifier:', nltk.classify.accuracy(BNB_classifier, testing_set) * 100)
-print('LogisticRegression_classifier:', nltk.classify.accuracy(LogisticRegression_classifier, testing_set) * 100)
-print('SGDClassifier_classifier:', nltk.classify.accuracy(SGDClassifier_classifier, testing_set) * 100)
-print('SVC_classifier:', nltk.classify.accuracy(SVC_classifier, testing_set) * 100)
-print('LinearSVC_classifier:', nltk.classify.accuracy(LinearSVC_classifier, testing_set) * 100)
-print('NuSVC_classifier:', nltk.classify.accuracy(NuSVC_classifier, testing_set) * 100)
+run_print('MNB_classifier:', MNB_classifier)
+run_print('BNB_classifier:', BNB_classifier)
+run_print('LogisticRegression_classifier:', LogisticRegression_classifier)
+run_print('SGDClassifier_classifier:', SGDClassifier_classifier)
+run_print('SVC_classifier:', SVC_classifier)
+run_print('LinearSVC_classifier:', LinearSVC_classifier)
+run_print('NuSVC_classifier:', NuSVC_classifier)
 
