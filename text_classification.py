@@ -6,7 +6,33 @@ from pprint import pprint as pp
 
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.linear_model import LogisticRegression, SGDClassifier
-from sklearn.svm import SVC, LinearSVC, NuSVC
+from sklearn.svm import LinearSVC, NuSVC
+
+from nltk.classify import ClassifierI
+from statistics import mode
+
+class VoteClassifier(ClassifierI):
+    def __init__(self, *classifiers):
+        self._classifiers = classifiers
+
+    def classify(self, features):
+        votes = []
+        for c in self._classifiers:
+            v = c.classify(features)
+            votes.append(v)
+        return mode(votes)
+
+    def confidence(self, features):
+        votes = []
+        for c in self._classifiers:
+            v = c.classify(features)
+            votes.append(v)
+
+        choice_votes = votes.count(mode(votes))
+        conf = choice_votes / len(votes)
+        return conf
+
+
 
 documents = [(list(movie_reviews.words(fileid)), category)
              for category in movie_reviews.categories()
@@ -59,14 +85,13 @@ LogisticRegression_classifier.train(training_set)
 SGDClassifier_classifier = SklearnClassifier(SGDClassifier())
 SGDClassifier_classifier.train(training_set)
 
-SVC_classifier = SklearnClassifier(SVC())
-SVC_classifier.train(training_set)
-
 LinearSVC_classifier = SklearnClassifier(LinearSVC())
 LinearSVC_classifier.train(training_set)
 
 NuSVC_classifier = SklearnClassifier(NuSVC())
 NuSVC_classifier.train(training_set)
+
+# Voting Classifier combines all classifiers
 
 # nltk algo
 run_print('Naive Bayes:', NBclassifier)
@@ -77,7 +102,15 @@ run_print('MNB_classifier:', MNB_classifier)
 run_print('BNB_classifier:', BNB_classifier)
 run_print('LogisticRegression_classifier:', LogisticRegression_classifier)
 run_print('SGDClassifier_classifier:', SGDClassifier_classifier)
-run_print('SVC_classifier:', SVC_classifier)
 run_print('LinearSVC_classifier:', LinearSVC_classifier)
 run_print('NuSVC_classifier:', NuSVC_classifier)
 
+voted_classifier = VoteClassifier(NBclassifier,
+                                  MNB_classifier,
+                                  BNB_classifier,
+                                  LogisticRegression_classifier,
+                                  SGDClassifier_classifier,
+                                  LinearSVC_classifier,
+                                  NuSVC_classifier)
+
+run_print('voted_classifier:', voted_classifier)
